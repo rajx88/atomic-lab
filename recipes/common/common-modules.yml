@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+# Common layer: shared across every recipe regardless of window manager.
+# Import from a recipe with: - from-file: common/common-modules.yml
+modules:
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+        # session essentials
+        - noctalia
+        - fuzzel
+        - kitty
+        # app layer + bootstrap
+        - flatpak
+        - git
+        # session tools (volume, media keys, screenshot)
+        - pulseaudio-utils
+        - playerctl
+        - grim
+        - slurp
+        # gaming core (this machine's purpose)
+        - gamescope
+
+  - type: default-flatpaks
+    configurations:
+      - scope: system
+        install:
+          - com.valvesoftware.Steam
+      - scope: user
+
+  - type: signing

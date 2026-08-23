@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+# Hyprland layer: WM stack + Hyprland session tools + skel config.
+# Import with: - from-file: common/hyprland-modules.yml
+modules:
+  - type: files
+    files:
+      - source: system
+        destination: /
+
+  - type: dnf
+    repos:
+      copr:
+        - craftidore/wayblueorg-hyprland
+    install:
+      install-weak-deps: false
+      packages:
+        # WM stack
+        - hyprland
+        - hyprland-guiutils
+        - hyprpolkitagent
+        - xdg-desktop-portal-hyprland
+        # Hyprland session
+        - hyprlock
+        - hypridle
+        - hyprpaper
+        - kitty

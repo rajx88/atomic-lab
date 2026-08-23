@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+# Graphical display manager. Swap with ly-modules.yml for terminal login.
+# Import with: - from-file: common/sddm-modules.yml
+modules:
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+        - sddm
+
+  - type: systemd
+    system:
+      enabled:
+        - sddm-boot.service

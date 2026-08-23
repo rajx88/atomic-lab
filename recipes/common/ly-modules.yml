@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+# Terminal (TUI) display manager. Swap with sddm-modules.yml for graphical login.
+# Import with: - from-file: common/ly-modules.yml
+modules:
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+        - ly
+
+  - type: systemd
+    system:
+      enabled:
+        - ly.service

@@ -9,35 +9,6 @@ base-image: ghcr.io/ublue-os/base-nvidia
 image-version: latest
 
 modules:
-  - type: files
-    files:
-      - source: system
-        destination: /
-
-  - type: dnf
-    repos:
-      copr:
-        - lionheartp/Hyprland
-    install:
-      packages:
-        - hyprland
-        - hyprland-guiutils
-        - hyprpolkitagent
-        - xdg-desktop-portal-hyprland
-        - noctalia
-        - fuzzel
-        - swaylock
-        - sddm
-        - gamescope
-        - gamemode
-        - mangohud
-        - kitty
-
-  - type: default-flatpaks
-    configurations:
-      - scope: system
-        install:
-          - com.valvesoftware.Steam
-      - scope: user
-
-  - type: signing
+  - from-file: common/common-modules.yml
+  - from-file: common/ly-modules.yml
+  - from-file: common/hyprland-modules.yml
