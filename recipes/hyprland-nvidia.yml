@@ -30,6 +30,7 @@ modules:
         - gamescope
         - gamemode
         - mangohud
+        - kitty
 
   - type: default-flatpaks
     configurations:
