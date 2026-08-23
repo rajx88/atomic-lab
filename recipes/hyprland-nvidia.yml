@@ -21,6 +21,7 @@ modules:
     install:
       packages:
         - hyprland
+        - hyprland-guiutils
         - hyprpolkitagent
         - xdg-desktop-portal-hyprland
         - noctalia
