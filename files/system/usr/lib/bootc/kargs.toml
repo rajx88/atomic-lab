@@ -1,0 +1,9 @@
+# Nvidia kernel args, baked into the image (applied to every deployment).
+# Equivalent of `ujust configure-nvidia` at build time — boots the closed
+# nvidia driver instead of nouveau, enables modesetting for Wayland.
+kargs = [
+  "rd.driver.blacklist=nouveau",
+  "modprobe.blacklist=nouveau",
+  "nvidia-drm.modeset=1",
+  "nvidia-drm.fbdev=1",
+]
