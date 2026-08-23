@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+# image will be published to ghcr.io/<user>/hyprland-nvidia
+name: hyprland-nvidia
+# description will be included in the image's metadata
+description: Fedora Atomic Hyprland desktop, closed nvidia driver (GTX 10-series and older).
+
+# the base image to build on top of (FROM) and the version tag to use
+base-image: ghcr.io/ublue-os/base-nvidia
+image-version: latest
+
+modules:
+  - type: files
+    files:
+      - source: system
+        destination: /
+
+  - type: dnf
+    repos:
+      copr:
+        - lionheartp/Hyprland
+    install:
+      packages:
+        - hyprland
+        - hyprpolkitagent
+        - xdg-desktop-portal-hyprland
+        - noctalia
+        - fuzzel
+        - swaylock
+        - sddm
+        - gamescope
+        - gamemode
+        - mangohud
+
+  - type: default-flatpaks
+    configurations:
+      - scope: system
+        install:
+          - com.valvesoftware.Steam
+      - scope: user
+
+  - type: signing
