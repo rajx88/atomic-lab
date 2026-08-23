@@ -11,4 +11,5 @@ image-version: latest
 modules:
   - from-file: common/common-modules.yml
   - from-file: common/ly-modules.yml
+  - from-file: common/nvidia-modules.yml
   - from-file: common/hyprland-modules.yml
