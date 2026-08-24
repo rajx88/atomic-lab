@@ -2,6 +2,12 @@
 # Nvidia layer: nvidia-specific image files (kernel args).
 # Include ONLY in nvidia recipes (closed or open), not in non-nvidia ones.
 # Import with: - from-file: common/nvidia-modules.yml
+modules:
+  - type: files
+    files:
+      - source: nvidia
+        destination: /
+
   - type: dnf
     install:
       install-weak-deps: false
