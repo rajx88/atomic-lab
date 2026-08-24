@@ -13,3 +13,5 @@ modules:
   - from-file: common/ly-modules.yml
   - from-file: common/nvidia-modules.yml
   - from-file: common/hyprland-modules.yml
+  - from-file: common/apps-modules.yml
+  - from-file: common/gaming-modules.yml

@@ -13,22 +13,66 @@ modules:
         # app layer + bootstrap
         - flatpak
         - git
+        # cli essentials
+        - fzf
+        - nvim
+        - zoxide
+        - atuin
+
         # session tools (volume, media keys, screenshot)
         - pulseaudio-utils
         - playerctl
         - grim
         - slurp
-        # gaming core (this machine's purpose)
-        - gamescope
-        # cli essentials
-        - fzf
-        - nvim
+        # clipboard (screenshot keybind: grim | wl-copy)
+        - wl-clipboard
+        # notifications
+        - dunst
+        # audio mixer GUI
+        - pavucontrol
+        # alsa mixer/cli (focusrite scarlett control; not guaranteed in base)
+        - alsa-utils
+        # display tools (multi-monitor + laptop hotplug)
+        - wlr-randr
+        - wlsunset
+        - brightnessctl
+        - kanshi
+        # file manager + mount backends
+        - thunar
+        - thunar-volman
+        - thunar-archive-plugin
+        - xarchiver
+        - imv
+        # archive backends for xarchiver (install-weak-deps: false -> not auto-pulled)
+        - p7zip
+        - unzip
+        - gvfs-fuse
+        - gvfs-archive
+        - gvfs-smb
+        - gvfs-nfs
+        # networking GUI (wifi + bluetooth, laptop)
+        - network-manager-applet
+        - blueman
+        - bluez-tools
+        - firewall-config
+        # vulkan (verify nvidia vulkan with vulkaninfo; layers for debugging)
+        - vulkan-tools
+        - vulkan-validation-layers
+        # user dirs, emoji, disks, misc
+        - xdg-user-dirs
+        - google-noto-emoji-fonts
+        - gnome-disk-utility
+        - unar
+        - ddcutil
+        # icon + font themes
+        - papirus-icon-theme
+        - fontawesome-fonts-all
 
   - type: default-flatpaks
     configurations:
       - scope: system
         install:
-          - com.valvesoftware.Steam
+          - app.zen_browser.zen
       - scope: user
 
   - type: signing
