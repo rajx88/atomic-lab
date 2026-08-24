@@ -20,6 +20,9 @@ modules:
         - slurp
         # gaming core (this machine's purpose)
         - gamescope
+        # cli essentials
+        - fzf
+        - nvim
 
   - type: default-flatpaks
     configurations:
