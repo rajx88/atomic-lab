@@ -2,7 +2,7 @@
 -- Bootstrap config: fresh users get a working session, then override with
 -- their own ~/.config/hypr/hyprland.lua. Keybinds follow the established
 -- scheme: SUPER for WM, SUPER+SHIFT for windows/apps, hjkl + arrows for
--- directions.
+-- directions. API verified against the official example config (0.55+ Lua).
 
 hl.config({
   scrolling = {
@@ -12,73 +12,60 @@ hl.config({
 })
 
 -- Autostart: bar + idle daemon
-hl.on("start", function()
-  hl.spawn("noctalia")
-  hl.spawn("hypridle")
+hl.on("hyprland.start", function()
+  hl.exec_cmd("noctalia")
+  hl.exec_cmd("hypridle")
 end)
 
+local mainMod = "SUPER"
+
 -- ── Terminal / apps ──
-hl.bind("SUPER SHIFT, t", hl.spawn("kitty"))
+hl.bind(mainMod .. " + SHIFT + t", hl.dsp.exec_cmd("kitty"))
 
 -- ── Core WM ──
-hl.bind("SUPER SHIFT, q",     hl.dsp.closewindow())
-hl.bind("SUPER, f",           hl.dsp.fullscreen())
-hl.bind("SUPER SHIFT, space", hl.dsp.togglefloating())
-hl.bind("SUPER, r",           hl.dsp.reload())
+hl.bind(mainMod .. " + SHIFT + q",     hl.dsp.window.close())
+hl.bind(mainMod .. " + SHIFT + space", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + m",             hl.dsp.exit())
 
 -- ── Launcher / panels / lock ──
-hl.bind("SUPER, space",     hl.spawn("fuzzel"))
-hl.bind("SUPER SHIFT, w",   hl.spawn("noctalia msg panel-toggle control-center"))
-hl.bind("SUPER, Escape",    hl.spawn("noctalia msg panel-toggle session"))
-hl.bind("SUPER, backspace", hl.spawn("hyprlock"))
+hl.bind(mainMod .. " + space",     hl.dsp.exec_cmd("fuzzel"))
+hl.bind(mainMod .. " + SHIFT + w", hl.dsp.exec_cmd("noctalia msg panel-toggle control-center"))
+hl.bind(mainMod .. " + Escape",    hl.dsp.exec_cmd("noctalia msg panel-toggle session"))
+hl.bind(mainMod .. " + backspace", hl.dsp.exec_cmd("hyprlock"))
 
 -- ── Focus direction (hjkl + arrows) ──
-hl.bind("SUPER, h",        hl.dsp.movefocus("l"))
-hl.bind("SUPER, l",        hl.dsp.movefocus("r"))
-hl.bind("SUPER, k",        hl.dsp.movefocus("u"))
-hl.bind("SUPER, j",        hl.dsp.movefocus("d"))
-hl.bind("SUPER, Left",     hl.dsp.movefocus("l"))
-hl.bind("SUPER, Right",    hl.dsp.movefocus("r"))
-hl.bind("SUPER, Up",       hl.dsp.movefocus("u"))
-hl.bind("SUPER, Down",     hl.dsp.movefocus("d"))
+hl.bind(mainMod .. " + h",     hl.dsp.focus({ direction = "left" }))
+hl.bind(mainMod .. " + l",     hl.dsp.focus({ direction = "right" }))
+hl.bind(mainMod .. " + k",     hl.dsp.focus({ direction = "up" }))
+hl.bind(mainMod .. " + j",     hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + Left",  hl.dsp.focus({ direction = "left" }))
+hl.bind(mainMod .. " + Right", hl.dsp.focus({ direction = "right" }))
+hl.bind(mainMod .. " + Up",    hl.dsp.focus({ direction = "up" }))
+hl.bind(mainMod .. " + Down",  hl.dsp.focus({ direction = "down" }))
 
--- ── Swap windows ──
-hl.bind("SUPER SHIFT, h",     hl.dsp.swapwindow("l"))
-hl.bind("SUPER SHIFT, l",     hl.dsp.swapwindow("r"))
-hl.bind("SUPER SHIFT, k",     hl.dsp.swapwindow("u"))
-hl.bind("SUPER SHIFT, j",     hl.dsp.swapwindow("d"))
-hl.bind("SUPER SHIFT, Left",  hl.dsp.swapwindow("l"))
-hl.bind("SUPER SHIFT, Right", hl.dsp.swapwindow("r"))
-hl.bind("SUPER SHIFT, Up",    hl.dsp.swapwindow("u"))
-hl.bind("SUPER SHIFT, Down",  hl.dsp.swapwindow("d"))
-
--- ── Move windows ──
-hl.bind("SUPER CTRL, h",     hl.dsp.movewindow("l"))
-hl.bind("SUPER CTRL, l",     hl.dsp.movewindow("r"))
-hl.bind("SUPER CTRL, k",     hl.dsp.movewindow("u"))
-hl.bind("SUPER CTRL, j",     hl.dsp.movewindow("d"))
-hl.bind("SUPER CTRL, Left",  hl.dsp.movewindow("l"))
-hl.bind("SUPER CTRL, Right", hl.dsp.movewindow("r"))
-hl.bind("SUPER CTRL, Up",    hl.dsp.movewindow("u"))
-hl.bind("SUPER CTRL, Down",  hl.dsp.movewindow("d"))
+-- ── Scrolling layout: swap columns l/r ──
+hl.bind(mainMod .. " + SHIFT + h",     hl.dsp.layout("swapcol l"))
+hl.bind(mainMod .. " + SHIFT + l",     hl.dsp.layout("swapcol r"))
+hl.bind(mainMod .. " + SHIFT + Left",  hl.dsp.layout("swapcol l"))
+hl.bind(mainMod .. " + SHIFT + Right", hl.dsp.layout("swapcol r"))
 
 -- ── Workspaces 1-10 (0 key = 10) ──
 for i = 1, 10 do
-  local key = i == 10 and "0" or tostring(i)
-  hl.bind("SUPER, " .. key,        hl.dsp.workspace(tostring(i)))
-  hl.bind("SUPER SHIFT, " .. key,  hl.dsp.movetoworkspacesilent(tostring(i)))
+  local key = i % 10
+  hl.bind(mainMod .. " + " .. key,         hl.dsp.focus({ workspace = i }))
+  hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
--- ── Volume ──
-hl.bind(", XF86AudioRaiseVolume", hl.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%"))
-hl.bind(", XF86AudioLowerVolume", hl.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%"))
-hl.bind(", XF86AudioMute",        hl.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"))
+-- ── Volume (pactl) ──
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ +5%"),  { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ -5%"),  { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle"), { locked = true, repeating = true })
 
--- ── Media ──
-hl.bind(", XF86AudioNext",  hl.spawn("playerctl next"))
-hl.bind(", XF86AudioPrev",  hl.spawn("playerctl previous"))
-hl.bind(", XF86AudioPlay",  hl.spawn("playerctl play-pause"))
-hl.bind(", XF86AudioStop",  hl.spawn("playerctl stop"))
+-- ── Media (playerctl) ──
+hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
+hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioStop",  hl.dsp.exec_cmd("playerctl stop"),       { locked = true })
 
 -- ── Screenshot (region → clipboard) ──
-hl.bind("SUPER SHIFT, p", hl.spawn("grim -g \"$(slurp)\" - | wl-copy"))
+hl.bind(mainMod .. " + SHIFT + p", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))
