@@ -1,7 +1,11 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
 # Common layer: shared across every recipe regardless of window manager.
-# Import from a recipe with: - from-file: common/common-modules.yml
 modules:
+  - type: files
+    files:
+      - source: system
+        destination: /
+
   - type: dnf
     install:
       install-weak-deps: false
@@ -12,10 +16,13 @@ modules:
         - kitty
         # app layer + bootstrap
         - flatpak
-        - git
+
         # cli essentials
-        - fzf
+        - git
         - nvim
+        - fzf
+        - stow
+        - ripgrep
         - zoxide
         - atuin
 
