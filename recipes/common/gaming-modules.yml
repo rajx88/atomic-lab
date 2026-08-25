@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
 # Gaming layer: steam (rpm), controller udev rules, gamescope.
-# MUST be imported AFTER apps-modules.yml — steam needs the negativo17 steam
-# repo enabled by apps-modules' enable-app-repos.sh script.
+# MUST be imported AFTER apps-modules.yml — steam needs the Terra repo
+# enabled by apps-modules' enable-app-repos.sh script.
 # Import with: - from-file: common/gaming-modules.yml
 modules:
   - type: dnf

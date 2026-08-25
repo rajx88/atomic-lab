@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -oue pipefail
 
-# negativo17 steam repo (same ecosystem as the base's fedora-multimedia repo)
-curl --retry 3 --retry-delay 5 -Lo /etc/yum.repos.d/negativo17-fedora-steam.repo https://negativo17.org/repos/fedora-steam.repo
+# Terra repo (same source Bazzite uses for steam). terra-release brings the
+# GPG-checked repo files; only the base repo is needed (no mesa/extras —
+# base-nvidia manages its own graphics stack).
+dnf -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
 
 # 1Password official repo + signing key
 rpm --import https://downloads.1password.com/linux/keys/1password.asc

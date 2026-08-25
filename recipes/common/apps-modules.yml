@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
-# App layer: rpm-installed user apps from third-party repos (steam via
-# negativo17, 1Password + CLI via the official 1Password repo).
+# App layer: rpm-installed user apps from third-party repos (steam via Terra
+# — same as Bazzite, 1Password + CLI via the official 1Password repo).
 # Import with: - from-file: common/apps-modules.yml
 modules:
   - type: script
