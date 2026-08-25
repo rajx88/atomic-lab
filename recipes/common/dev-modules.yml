@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+# Dev layer: container-based development tools for an immutable host.
+# Dev toolchains belong in distrobox/toolbox containers, not in the image.
+# Import with: - from-file: common/dev-modules.yml
+modules:
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+        - distrobox
+        - podman
+        - toolbox

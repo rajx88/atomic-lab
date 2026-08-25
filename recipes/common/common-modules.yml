@@ -25,6 +25,9 @@ modules:
         - ripgrep
         - zoxide
         - atuin
+        - fish
+        # backup (restic CLI; /home is not covered by image rollback)
+        - restic
 
         # session tools (volume, media keys, screenshot)
         - pulseaudio-utils
@@ -75,6 +78,14 @@ modules:
         - papirus-icon-theme
         - fontawesome-fonts-all
 
+  # prmt prompt binary (static musl build from upstream releases)
+  - type: script
+    scripts:
+      - install-prmt.sh
+
+  # ujust recipes (files/justfiles/*.just); module also installs just
+  - type: justfiles
+    install: true
   - type: default-flatpaks
     configurations:
       - scope: system

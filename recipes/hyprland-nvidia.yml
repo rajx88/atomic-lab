@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-# image will be published to ghcr.io/<user>/hyprland-nvidia
+# image will be published to ghcr.io/rajx88/hyprland-nvidia
 name: hyprland-nvidia
 # description will be included in the image's metadata
 description: Fedora Atomic Hyprland desktop, closed nvidia driver (GTX 10-series and older).
@@ -15,3 +15,4 @@ modules:
   - from-file: common/hyprland-modules.yml
   - from-file: common/apps-modules.yml
   - from-file: common/gaming-modules.yml
+  - from-file: common/dev-modules.yml
