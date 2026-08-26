@@ -3,16 +3,17 @@
 # Start Hyprland with the correct config, resolved in priority order:
 #   1. user Lua config    (~/.config/hypr/hyprland.lua)   - Hyprland 0.55+
 #   2. user hyprlang conf (~/.config/hypr/hyprland.conf)  - legacy
-#   3. Hyprland default   (skel guarantees a config exists for fresh users)
+#   3. image default      (/usr/share/hyprland-nvidia/hyprland.lua)
 set -oue pipefail
 
 hyprland_lua="$HOME/.config/hypr/hyprland.lua"
 hyprland_conf="$HOME/.config/hypr/hyprland.conf"
+default_lua="/usr/share/hyprland-nvidia/hyprland.lua"
 
 if [ -f "$hyprland_lua" ]; then
     start-hyprland -- -c "$hyprland_lua"
 elif [ -f "$hyprland_conf" ]; then
     start-hyprland -- -c "$hyprland_conf"
 else
-    start-hyprland
+    start-hyprland -- -c "$default_lua"
 fi

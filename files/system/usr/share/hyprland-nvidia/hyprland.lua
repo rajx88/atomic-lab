@@ -1,7 +1,7 @@
--- Minimal default Hyprland config (Fedora Atomic / hyprland-nvidia image)
--- Bootstrap config: fresh users get a working session, then override with
--- their own ~/.config/hypr/hyprland.lua. Keybinds follow the established
--- scheme: SUPER for WM, SUPER+SHIFT for windows/apps, hjkl + arrows for
+-- Image-default Hyprland config (hyprland-nvidia image). Loaded directly from
+-- /usr by starthyprland when no user config exists; a rebase updates it for
+-- every account. To customize, copy to ~/.config/hypr/hyprland.lua and edit.
+-- Keybinds: SUPER for WM, SUPER+SHIFT for windows/apps, hjkl + arrows for
 -- directions. API verified against the official example config (0.55+ Lua).
 
 hl.config({
@@ -14,7 +14,7 @@ hl.config({
 -- Autostart: bar + idle daemon
 hl.on("hyprland.start", function()
   hl.exec_cmd("noctalia")
-  hl.exec_cmd("hypridle")
+  hl.exec_cmd("sh -c 'if [ -f \"$HOME/.config/hypr/hypridle.conf\" ]; then exec hypridle; else exec hypridle -c /usr/share/hyprland-nvidia/hypridle.conf; fi'")
 end)
 
 local mainMod = "SUPER"
